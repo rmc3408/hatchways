@@ -1,0 +1,35 @@
+@import "~antd/dist/antd.css";
+
+.Full-App {
+  font-family: "Raleway", sans-serif;
+  background: #4aa34f;
+  height: 100vh;
+}
+
+.BoardBox {
+  background: #dd0707c4;
+  position: fixed;
+  margin: 5vh 20%;
+  height: 90vh;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+}
+
+.BoardBox::-webkit-scrollbar { 
+  display: none; 
+}
+
+.Center-BoardBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatarStyle {
+  border: 1px solid lightgray;
+}
+
+.CardText-StudentCard {
+ padding-left: 1.2vw;
+}

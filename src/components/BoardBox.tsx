@@ -2,7 +2,7 @@ import React, { ChangeEvent, Fragment, useState } from "react";
 import StudentCard from "./StudentCard";
 import { getData } from "../API/getData";
 import { useQuery } from "react-query";
-import { Row, Card, Divider, Input } from "antd";
+import { Row, Card, Divider } from "antd";
 
 const BoardBox = () => {
   const [fullNamefiltered, setFullNamefiltered] = useState<IStudent[] | undefined>(undefined);
@@ -11,6 +11,9 @@ const BoardBox = () => {
     "students",
     () => getData()
   );
+
+  if (isLoading) return <h1>Loading...</h1>;
+  if (error) return <h1>An error has occurred</h1>;
 
   const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     const txt = e.target.value.toLowerCase();
@@ -21,9 +24,6 @@ const BoardBox = () => {
     );
     setFullNamefiltered(txtFiltered);
   };
-
-  if (isLoading) return <h1>Loading...</h1>;
-  if (error) return <h1>An error has occurred</h1>;
 
   const FullData = data?.map((stud: IStudent) => {
     return (
@@ -45,14 +45,11 @@ const BoardBox = () => {
 
   return (
     <div className="Center-BoardBox">
-      <Input
-        size="large"
-        placeholder="Search by name"
-        onChange={onNameChange}
-        allowClear
-        className="input-Name-BoardBox"
-      />
-
+      <input
+      placeholder="Search by name"
+      onChange={onNameChange}
+      className="input-Name-BoardBox"
+    />
       <Card >
         <Row justify="center" align="middle">
           {NamedFilteredData ?? FullData}

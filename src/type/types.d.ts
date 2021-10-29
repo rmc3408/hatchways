@@ -9,6 +9,9 @@ interface IStudent {
     pic: string;
     skill: string;
 }
+interface IGrades {
+    grades: string[];
+}
 
 type TError = {
     response: { data: { message: string } };

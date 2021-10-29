@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Avatar, Typography, Col } from "antd";
+import GradesPanel from "./GradesPanel";
 const { Title } = Typography;
 
 const StudentCard = (props: IStudent) => {
+  const [isAllGrades, setIsAllGrades] = useState<boolean>(false);
   const { pic, firstName, lastName, id, email, company, skill, grades } = props;
 
   const average =
@@ -22,6 +24,15 @@ const StudentCard = (props: IStudent) => {
           <p>Company: {company}</p>
           <p>Skill: {skill}</p>
           <p>Average: {average}%</p>
+          {isAllGrades && <GradesPanel grades={grades} />}
+        </div>
+        <div>
+          <button
+            onClick={() => setIsAllGrades(!isAllGrades)}
+            className="plusButton-StudentCard"
+          >
+            {isAllGrades ? '-' : '+'}
+          </button>
         </div>
       </Col>
     </>

@@ -12,6 +12,8 @@
   height: 90vh;
   overflow-y: scroll;
   -ms-overflow-style: none;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
 .BoardBox::-webkit-scrollbar {
@@ -76,4 +78,13 @@
 }
 .table-GradesPanel > tr > td {
   padding-right: 32px;
+}
+
+.input-Tag-StudentCard {
+  outline: 0;
+  display: block;
+  font-size: 1rem;
+  border: 0;
+  width: auto;
+  border-bottom: 2px solid rgba(88,78,0,0.2);
 }

@@ -1,7 +1,7 @@
 import React from "react";
-import "./App.css";
 import BoardBox from "./components/BoardBox";
 import { QueryClient, QueryClientProvider } from "react-query";
+import "./App.css";
 
 const queryClient = new QueryClient();
 

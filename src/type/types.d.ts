@@ -8,6 +8,7 @@ interface IStudent {
     lastName: string;
     pic: string;
     skill: string;
+    tags?: Array<string>;
 }
 interface IGrades {
     grades: string[];

@@ -8,7 +8,6 @@ interface IStudent {
     lastName: string;
     pic: string;
     skill: string;
-    tags?: Array<string>;
 }
 interface IGrades {
     grades: string[];
@@ -17,3 +16,7 @@ interface IGrades {
 type TError = {
     response: { data: { message: string } };
 };
+
+interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }

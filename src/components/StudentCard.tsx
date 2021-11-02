@@ -2,19 +2,23 @@ import React, { ChangeEvent, Fragment, KeyboardEvent, useState } from "react";
 import { Avatar, Typography, Col, Tag } from "antd";
 import GradesPanel from "./GradesPanel";
 import { v4 as uuidv4 } from 'uuid';
+import { addTag } from "../store/actions";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../store/store";
 
 const { Title } = Typography;
 
 type ISetTags = {
-  getTags: (a: string[], b: string) => void;
+  tag: string;
 }
 
-const StudentCard = (props: IStudent & ISetTags ) => {
+const StudentCard = (props: IStudent & ISetTags) => {
+  const dispatch = useDispatch<AppDispatch>();
   const [isAllGrades, setIsAllGrades] = useState<boolean>(false);
   const [arrTags, setarrTags] = useState<Array<string>>([]);
   const [tagText, setTagText] = useState<string>('');
 
-  const { pic, firstName, lastName, id, email, company, skill, grades, getTags } = props;
+  const { pic, firstName, lastName, id, email, company, skill, grades, tag } = props;
 
   const average =
     grades.reduce((acc, c) => acc + parseFloat(c), 0) / grades.length || 0;
@@ -23,14 +27,16 @@ const StudentCard = (props: IStudent & ISetTags ) => {
     if (e.key === 'Enter') {
       const newTag = arrTags;
       newTag.push(tagText);
-      getTags(newTag, id);
       setarrTags(newTag);
+      dispatch(addTag(newTag));
       setTagText('');
     }
   };
+
   const tagTyping = (e: ChangeEvent<HTMLInputElement>) => {
     setTagText(e.target.value);
   };
+
 
   return (
     <Fragment>

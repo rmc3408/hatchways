@@ -1,19 +1,18 @@
 import React from "react";
 import BoardBox from "./components/BoardBox";
-import { QueryClient, QueryClientProvider } from "react-query";
 import "./App.css";
-
-const queryClient = new QueryClient();
+import { Provider } from 'react-redux';
+import store from './store/store';
 
 const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
       <div className="Full-App">
         <div className="BoardBox">
           <BoardBox />
         </div>
       </div>
-    </QueryClientProvider>
+    </Provider>
   );
 };
 

@@ -3,32 +3,32 @@ import { Avatar, Typography, Col, Tag } from "antd";
 import GradesPanel from "./GradesPanel";
 import { v4 as uuidv4 } from 'uuid';
 import { addTag } from "../store/actions";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store/store";
 
 const { Title } = Typography;
 
-type ISetTags = {
-  tag: string;
-}
 
-const StudentCard = (props: IStudent & ISetTags) => {
+const StudentCard = (props: IStudent) => {
+  const tags = useSelector((state: RootState) => state.tags);
   const dispatch = useDispatch<AppDispatch>();
   const [isAllGrades, setIsAllGrades] = useState<boolean>(false);
   const [arrTags, setarrTags] = useState<Array<string>>([]);
   const [tagText, setTagText] = useState<string>('');
 
-  const { pic, firstName, lastName, id, email, company, skill, grades, tag } = props;
+  const { pic, firstName, lastName, id, email, company, skill, grades } = props;
 
   const average =
     grades.reduce((acc, c) => acc + parseFloat(c), 0) / grades.length || 0;
   
   const tagCreating = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      const newTag = arrTags;
-      newTag.push(tagText);
-      setarrTags(newTag);
-      dispatch(addTag(newTag));
+      const newTagCard = {
+        id,
+        info: [...arrTags, tagText]
+      };
+      setarrTags([...arrTags, tagText]);
+      dispatch(addTag(newTagCard));
       setTagText('');
     }
   };
@@ -53,7 +53,8 @@ const StudentCard = (props: IStudent & ISetTags) => {
           <p>Skill: {skill}</p>
           <p>Average: {average}%</p>
           {isAllGrades && <GradesPanel grades={grades} />}
-          {arrTags.map((tag) => <Tag key={uuidv4()} color="volcano">{tag}</Tag>)}
+          {console.log(tags)}
+          {tags.map((tag) => <Tag key={uuidv4()} color="volcano">{tag}</Tag>)}
           <input
             placeholder="Add a tag"
             className="input-Tag-StudentCard"

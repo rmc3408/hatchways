@@ -5,14 +5,14 @@ import { Row, Card, Divider } from "antd";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import { addStudents } from "../store/actions";
-import { RootState, AppDispatch } from '../store/store';
+import { RootState, AppDispatch } from "../store/store";
 
 const BoardBox = () => {
-  const students: Array<IStudent> = useSelector((state: RootState) => state.students);
+  const students: Array<IStudent> = useSelector(
+    (state: RootState) => state.students
+  );
   const dispatch = useDispatch<AppDispatch>();
-  const [dataDisplayed, setDataDisplayed] = useState<IStudent[] | null>(null);
-  const [listN, setListN] = useState<IStudent[] | undefined>(undefined);
-  const [tagText, setTagText] = useState<string | undefined>(undefined);
+  const [dataDisplayed, setDataDisplayed] = useState<IStudent[]>(students);
   const [isFetched, setIsFetched] = useState<boolean>(false);
   const [isNameFiltered, setIsNameFiltered] = useState<boolean>(false);
 
@@ -53,14 +53,14 @@ const BoardBox = () => {
           firstName.toLowerCase().includes(txt) ||
           lastName.toLowerCase().includes(txt)
       );
-      if (typeof filtered !== "undefined") {
-        setIsNameFiltered(true);
-        setDataDisplayed(filtered);
-      }
-      if (typeof filtered === "undefined") {
-        setDataDisplayed(students);
-        setIsNameFiltered(false);
-      }
+      setIsNameFiltered(true);
+      setDataDisplayed(filtered);
+      console.log(filtered.length);
+      
+    } else if (txt.length === 0) {
+      setDataDisplayed(students);
+      setIsNameFiltered(false);
+      console.log(dataDisplayed.length);
     }
   };
 
@@ -97,20 +97,22 @@ const BoardBox = () => {
         />
         <Card>
           <Row justify="center" align="middle">
-            {isFetched && !dataDisplayed &&
+            {isFetched &&
+              !isNameFiltered &&
               students.map((stud: IStudent) => {
                 return (
                   <Fragment key={uuidv4()}>
-                    <StudentCard {...stud} tag={tagText ?? ""} />
+                    <StudentCard {...stud} />
                     <Divider />
                   </Fragment>
                 );
               })}
-            {isFetched && dataDisplayed &&
-              dataDisplayed.map((stud: IStudent) => {
+            {isFetched &&
+              isNameFiltered &&
+              dataDisplayed?.map((stud: IStudent) => {
                 return (
                   <Fragment key={uuidv4()}>
-                    <StudentCard {...stud} tag={tagText ?? ""} />
+                    <StudentCard {...stud} />
                     <Divider />
                   </Fragment>
                 );
